@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách khách hàng</title>
+</head>
+<body>
+<a th:href="@{Create}">>>Thêm mới Khách hàng</a>
+<br>
+<h1>Danh sách khách hàng</h1>
+<br> <br>
+<table border="1 solid" width="40%">
+
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Img</th>
+        <th colspan="2">Action</th>
+    </tr>
+    <th:block th:each="C:${Customer}">
+        <tr>
+            <td th:text="${C.name}"></td>
+            <td th:text="${C.address}"></td>
+<!--            <td th:text="${C.img}"></td>-->
+            <td><img th:src="@{'/i/'+${C.img}}" alt="" width="100px"></td>
+            <td><a th:href="@{Remove(id=${C.id})}">Remove</a></td>
+            <td><a th:href="@{Delete(id=${C.id})}">Delete</a></td>
+        </tr>
+    </th:block>
+
+</table>
+
+</body>
+</html>

@@ -26,6 +26,11 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import repo.CustomerRepo;
+import repo.ICustomerRepo;
+import repo.IGeneralRepo;
+import service.CustomerService;
+import service.ICustomerService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -137,6 +142,17 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     public void configureDefaultServletHandling(
             DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
+    }
+
+//
+    @Bean
+    public ICustomerRepo customerRepo(){
+        return new CustomerRepo();
+    }
+
+    @Bean
+    public ICustomerService customerService(){
+        return new CustomerService();
     }
 
 
