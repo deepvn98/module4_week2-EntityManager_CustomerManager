@@ -69,11 +69,34 @@ public class CustomerController {
         return "redirect:Show";
     }
 //
-//    @GetMapping("Update")
-//    public
 
+    @GetMapping ("Update")
+    public ModelAndView updateForm(Long id){
+        Customer customer = customerService.findByID(id);
+        ModelAndView modelAndView = new ModelAndView("update");
+        modelAndView.addObject("customer",customer);
+        modelAndView.addObject("customerF",new CustomerFile());
+        return modelAndView;
+    }
 
-
-
+    @PostMapping("Update")
+    public String updateForm(CustomerFile customerFile){
+        Long id = customerFile.getId();
+        MultipartFile multipartFile = customerFile.getImg();
+        String nameFile = multipartFile.getOriginalFilename();
+        String localFile = environment.getProperty("fileImg");
+        try {
+            FileCopyUtils.copy(multipartFile.getBytes(),new File(localFile+nameFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Customer customer = new Customer();
+        customer.setId(id);
+        customer.setName(customerFile.getName());
+        customer.setAddress(customerFile.getAddress());
+        customer.setImg(nameFile);
+        customerService.save(customer);
+        return "redirect:Show";
+    }
 
 }
